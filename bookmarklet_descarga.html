@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Bookmarklet — Descarga fotos camisetas</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 700px; margin: 40px auto; padding: 20px; background: #f5f5f5; }
+  h2 { color: #1a237e; }
+  .steps { background: white; border-radius: 8px; padding: 20px; margin: 20px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+  .step { margin: 16px 0; display: flex; gap: 12px; align-items: flex-start; }
+  .num { background: #1a237e; color: white; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: bold; }
+  .bookmarklet-btn {
+    display: inline-block;
+    background: #1a237e;
+    color: white !important;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: grab;
+    border: 3px dashed #7986cb;
+    margin: 10px 0;
+  }
+  .bookmarklet-btn:hover { background: #283593; }
+  .note { background: #fff3e0; border-left: 4px solid #ff9800; padding: 12px; margin: 10px 0; border-radius: 4px; font-size: 14px; }
+</style>
+</head>
+<body>
+
+<h2>⚽ Descargador de fotos — Camisetas La Liga 26/27</h2>
+
+<div class="steps">
+  <div class="step">
+    <div class="num">1</div>
+    <div><strong>Arrastra este botón a tu barra de favoritos</strong> de Chrome:<br><br>
+      <a class="bookmarklet-btn" href="javascript:(function(){const FOTOS=[{url:'https://soccer-jersey-yupoo.com/wp-content/uploads/2026/05/2026-27-Real-Madrid-Soccer-Jersey-0.webp',nombre:'real-madrid-26-27-home-adulto'},{url:'https://soccer-jersey-yupoo.com/wp-content/uploads/2026/06/26-27-Real-Madrid-away-Soccer-Jersey-0.webp',nombre:'real-madrid-26-27-away-adulto'},{url:'https://soccer-jersey-yupoo.com/wp-content/uploads/2026/05/Real-Madrid-2026-27-Third-Soccer-Jersey-0.webp',nombre:'real-madrid-26-27-third-adulto'},{url:'https://soccer-jersey-yupoo.com/wp-content/uploads/2026/04/Kids-2026-27-Real-Madrid-Home-Soccer-Jersey-0.webp',nombre:'real-madrid-26-27-home-nino'},{url:'https://soccer-jersey-yupoo.com/wp-content/uploads/2026/08/Kids-Kit-26-27-RM-Away-Soccer-Jersey-2.webp',nombre:'real-madrid-26-27-away-nino'},{url:'https://soccer-jersey-yupoo.com/wp-content/uploads/2026/06/26-27-Real-Madrid-Away-Kid-Soccer-Jersey-0.webp',nombre:'real-madrid-26-27-third-nino'},{url:'https://soccer-jersey-yupoo.com/wp-content/uploads/2026/01/26-27-Barc-Home-Soccer-Jersey-0.webp',nombre:'barcelona-26-27-home-adulto'},{url:'https://soccer-jersey-yupoo.com/wp-content/uploads/2026/06/26-27-barcelona-special-Black-Soccer-Jersey-0.webp',nombre:'barcelona-26-27-away-adulto'},{url:'https://soccer-jersey-yupoo.com/wp-content/uploads/2026/06/26-27-barcelona-special-Navy-Soccer-Jersey-0.webp',nombre:'barcelona-26-27-third-adulto'},{url:'https://soccer-jersey-yupoo.com/wp-content/uploads/2026/08/Atletico-Madrid-2026-27-Home-PlayerJersey-0.webp',nombre:'atletico-madrid-26-27-home-adulto'},{url:'https://soccer-jersey-yupoo.com/wp-content/uploads/2026/07/2026-27-Atletico-Madrid-Away-Soccer-Jersey-0.webp',nombre:'atletico-madrid-26-27-away-adulto'},{url:'https://soccer-jersey-yupoo.com/wp-content/uploads/2026/07/Sevilla-2026-27-Home-Soccer-Jersey-0.webp',nombre:'sevilla-26-27-home-adulto'},{url:'https://soccer-jersey-yupoo.com/wp-content/uploads/2026/06/25-26-Sevilla-FC-Home-Kid-Soccer-Jersey-0.webp',nombre:'sevilla-26-27-home-nino'},{url:'https://soccer-jersey-yupoo.com/wp-content/uploads/2026/07/Real-Betis-2026-27-Home-Soccer-Jersey-0.webp',nombre:'real-betis-26-27-home-adulto'},{url:'https://soccer-jersey-yupoo.com/wp-content/uploads/2026/07/Athletic-Bilbao-2026-27-Home-Soccer-Jersey-0.webp',nombre:'athletic-bilbao-26-27-home-adulto'},{url:'https://soccer-jersey-yupoo.com/wp-content/uploads/2026/06/26-27-Valencia-Home-Soccer-Jersey-0.webp',nombre:'valencia-26-27-home-adulto'},{url:'https://soccer-jersey-yupoo.com/wp-content/uploads/2026/07/26-27-Valencia-Away-Soccer-Jersey-0.webp',nombre:'valencia-26-27-away-adulto'},{url:'https://soccer-jersey-yupoo.com/wp-content/uploads/2026/07/2026-27-Osasuna-Home-Soccer-Jersey-1.webp',nombre:'osasuna-26-27-home-adulto'},{url:'https://soccer-jersey-yupoo.com/wp-content/uploads/2026/06/26-27-Rayo-Vallecano-Home-Soccer-Jersey-0.webp',nombre:'rayo-vallecano-26-27-home-adulto'},{url:'https://soccer-jersey-yupoo.com/wp-content/uploads/2026/08/2026-27-Girona-Away-Soccer-Jersey-0.webp',nombre:'girona-26-27-away-adulto'},{url:'https://soccer-jersey-yupoo.com/wp-content/uploads/2026/07/Espanyol-2026-27-Home-Soccer-Jersey-0.webp',nombre:'espanyol-26-27-home-adulto'}];let i=0;function next(){if(i>=FOTOS.length){alert('✅ Descarga completada: '+FOTOS.length+' fotos. Ahora ejecuta descargar_fotos.bat para moverlas al catálogo.');return;}const f=FOTOS[i++];fetch(f.url,{credentials:'include'}).then(r=>r.blob()).then(blob=>{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=f.nombre+'.jpg';document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(next,800);}).catch(()=>{console.warn('Error: '+f.url);setTimeout(next,800);});}next();})();">⬇️ Descargador Camisetas 26/27</a>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">2</div>
+    <div>
+      <strong>Ve a <a href="https://soccer-jersey-yupoo.com" target="_blank">soccer-jersey-yupoo.com</a></strong> en Chrome y espera a que cargue la página (puede pedir CAPTCHA la primera vez).
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">3</div>
+    <div>
+      <strong>Pulsa el favorito "Descargador Camisetas 26/27"</strong> que acabas de añadir.<br>
+      Chrome descargará las 21 fotos automáticamente a tu carpeta <em>Descargas</em>.
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">4</div>
+    <div>
+      <strong>Ejecuta <code>descargar_fotos.bat</code></strong> para mover las fotos de Descargas a las carpetas del catálogo.
+    </div>
+  </div>
+
+  <div class="note">
+    ⚠️ Chrome puede preguntar si permites múltiples descargas — pulsa <strong>Permitir</strong>.
+  </div>
+</div>
+
+</body>
+</html>
