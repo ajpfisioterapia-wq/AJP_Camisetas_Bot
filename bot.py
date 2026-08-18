@@ -1070,13 +1070,14 @@ async def _procesar_pago_carrito(query, ctx):
     if es_manual:
         registrar_pedido_excel(pedido)
         marcar_confirmado(ref)
+        await _enviar_excel_admin(ctx.bot, ref)
         resumen = resumen_pedido_admin(pedido)
         await query.edit_message_text(
             f"✅ *Pedido manual registrado*\n\n"
             f"👤 Cliente: *{cli_nombre}*\n"
             f"🔖 Ref: `{ref}`\n\n"
             f"{resumen}\n\n"
-            f"_(El pedido ya está anotado en el Excel)_",
+            f"_(El Excel te acaba de llegar por aquí mismo)_",
             parse_mode=ParseMode.MARKDOWN,
         )
         ctx.user_data.clear()
@@ -1177,6 +1178,23 @@ async def recibir_comprobante(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     ctx.user_data.clear()
     return ConversationHandler.END
 
+async def _enviar_excel_admin(bot, ref: str):
+    """Envía el Excel actualizado al admin por Telegram."""
+    from config import PEDIDOS_XLSX
+    if not os.path.exists(PEDIDOS_XLSX):
+        return
+    try:
+        with open(PEDIDOS_XLSX, "rb") as f:
+            await bot.send_document(
+                chat_id=ADMIN_CHAT_ID,
+                document=f,
+                filename="PEDIDOS_BOT.xlsx",
+                caption=f"📊 Excel actualizado — Pedido `{ref}` añadido.",
+                parse_mode=ParseMode.MARKDOWN,
+            )
+    except Exception as e:
+        logger.error(f"No se pudo enviar el Excel: {e}")
+
 async def _editar_mensaje_admin(query, texto: str):
     """Edita el mensaje del admin funcione con foto (caption) o con texto."""
     try:
@@ -1205,6 +1223,7 @@ async def admin_confirmar(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
 
     marcar_confirmado(ref)
     registrar_pedido_excel(pedido)
+    await _enviar_excel_admin(ctx.bot, ref)
 
     # Notificar al cliente
     try:
