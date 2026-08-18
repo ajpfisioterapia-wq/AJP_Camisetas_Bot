@@ -17,7 +17,8 @@ BIZUM_NOMBRE = os.environ.get("BIZUM_NOMBRE", "Álvaro")
 
 # ── RUTAS ─────────────────────────────────────────────────────────────────────
 # En Railway: CATALOG_DIR=/data/CATALOGO  PEDIDOS_DIR=/data/pedidos
-_DEFAULT_CATALOG  = r"C:\Users\Usuario\Desktop\CATALOGO"
+# En Railway el CATALOGO va junto al código en la carpeta /app/CATALOGO
+_DEFAULT_CATALOG  = os.path.join(os.path.dirname(__file__), "CATALOGO")
 _DEFAULT_PEDIDOS  = r"C:\Users\Usuario\Desktop\Pedido Camisetas"
 
 CATALOG_DIR  = os.environ.get("CATALOG_DIR",  _DEFAULT_CATALOG)
