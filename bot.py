@@ -22,6 +22,7 @@ from config import (
     SUPLEM_NOMBRE_DORSAL, SUPLEM_PARCHE_UCL, BIENVENIDA, TEXTO_PAGO,
     CODIGOS_DESCUENTO,
 )
+from ticket import generar_ticket_pdf
 import catalogo as _catalogo_mod
 from catalogo import MENU, PRODUCTOS_POR_ID
 from pedidos import (
@@ -1087,6 +1088,19 @@ async def _procesar_pago_carrito(query, ctx):
         numero=BIZUM_NUMERO, nombre=BIZUM_NOMBRE, ref=ref
     )
     await query.edit_message_text(msg_pago, parse_mode=ParseMode.MARKDOWN)
+
+    # Enviar ticket PDF al cliente como resumen del pedido
+    try:
+        pdf_bytes = generar_ticket_pdf(pedido)
+        await query.message.reply_document(
+            document=pdf_bytes,
+            filename=f"Pedido_{ref}.pdf",
+            caption=f"🧾 *Aquí tienes el resumen de tu pedido* `{ref}`\nGuárdalo como referencia.",
+            parse_mode=ParseMode.MARKDOWN,
+        )
+    except Exception as e:
+        logger.warning(f"No se pudo generar el ticket PDF: {e}")
+
     return ST_COMPROBANTE
 
 # ── COMPROBANTE DE PAGO ────────────────────────────────────────────────────────
